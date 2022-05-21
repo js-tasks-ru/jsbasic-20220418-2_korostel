@@ -16,7 +16,7 @@ export default class RibbonMenu {
   }
 
   #render() {
-    const TEMPLATE = createElement(`
+    this.#elem = createElement(`
     <div class="ribbon">
     <!--Кнопка прокрутки влево-->
     <button class="ribbon__arrow ribbon__arrow_left ribbon__arrow_visible">
@@ -39,7 +39,6 @@ export default class RibbonMenu {
     </button>
   </div>
     `);
-    this.#elem = TEMPLATE;
   }
 
   #updateScroll() {

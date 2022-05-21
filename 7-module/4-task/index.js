@@ -16,7 +16,7 @@ export default class StepSlider {
     return this.#elem;
   }
 
-  #generateEvent = (value) => {
+  #dispatchCustomEvent = (value) => {
     const event = new CustomEvent("slider-change", {
       // имя события должно быть именно 'slider-change'
       detail: value, // значение 0, 1, 2, 3, 4
@@ -33,10 +33,12 @@ export default class StepSlider {
     let sliderValue = this.elem.querySelector(".slider__value");
 
     thumb.addEventListener("pointerdown", (e) => {
+      let { width, left } = this.elem.getBoundingClientRect();
       e.preventDefault();
       this.elem.classList.add("slider_dragging");
       const onMove = ({ clientX }) => {
-        let { width, left } = this.elem.getBoundingClientRect();
+
+        console.log(width, left)
         let offset = clientX - left;
         let leftRelative = offset / width;
 
@@ -69,7 +71,7 @@ export default class StepSlider {
             (100 / (this.#steps - 1)) * sliderValue.textContent;
           thumb.style.left = `${valuePercents}%`;
           progress.style.width = `${valuePercents}%`;
-          this.#generateEvent(+sliderValue.textContent);
+          this.#dispatchCustomEvent(+sliderValue.textContent);
           document.removeEventListener("pointermove", onMove);
           this.elem.classList.remove("slider_dragging");
         },
@@ -91,7 +93,7 @@ export default class StepSlider {
       thumb.style.left = `${valuePercents}%`;
       progress.style.width = `${valuePercents}%`;
       sliderValue.textContent = approximateValue;
-      this.#generateEvent(approximateValue);
+      this.#dispatchCustomEvent(approximateValue);
     });
   };
 

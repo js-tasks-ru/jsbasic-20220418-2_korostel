@@ -16,7 +16,7 @@ export default class StepSlider {
     return this.#elem;
   }
 
-  #generateEvent = (value) => {
+  #dispatchCustomEvent = (value) => {
     const event = new CustomEvent("slider-change", {
       // имя события должно быть именно 'slider-change'
       detail: value, // значение 0, 1, 2, 3, 4
@@ -47,7 +47,7 @@ export default class StepSlider {
       thumb.style.left = `${valuePercents}%`;
       progress.style.width = `${valuePercents}%`;
       sliderValue.textContent = approximateValue;
-      this.#generateEvent(approximateValue);
+      this.#dispatchCustomEvent(approximateValue);
     });
   };
 
